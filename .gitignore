@@ -1,11 +1,24 @@
-root = true
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-[*]
-indent_style = space
-indent_size = 2
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = false
+node_modules
+dist
+dist-ssr
+*.local
 
-[*.{json,md,yaml}]
-indent_size = 2
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
