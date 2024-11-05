@@ -72,11 +72,3 @@ function showLoader() {
 function hideLoader() {
     loader.style.display = "none";
 }
-
-
-
-
-
-
-
-
