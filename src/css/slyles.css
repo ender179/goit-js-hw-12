@@ -7,13 +7,16 @@ body {
     top: 50%;
     left: 50%;
     width: 50px;
-    aspect-ratio: 1 / 1;
-    /* Явное указание соотношения сторон */
+    height: 50px; /* Явное указание высоты для совместимости */
     border-radius: 50%;
     background:
-    radial-gradient(farthest-side, #1687ff 94%, #0000) top/8px 8px no-repeat,
-    conic-gradient(#0000 30%, #1696ff);
+        radial-gradient(farthest-side, #1687ff 94%, #0000) top/8px 8px no-repeat,
+        conic-gradient(#0000 30%, #1696ff);
+    
+    /* Вендорные префиксы для маски */
     -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+    mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
+    
     animation: l13 1s infinite linear;
 }
 
@@ -39,7 +42,6 @@ input[type='search'] {
     border-radius: 4px;
     padding-left: 10px;
     transition: border-color 0.3s ease;
-    /* Добавление перехода */
 }
 
 input[type='search']:hover {
@@ -55,7 +57,6 @@ input[type='search']:focus {
     flex-wrap: wrap;
     justify-content: center;
     gap: 24px;
-    /* padding-left: 0 auto; */
 }
 
 .gallery-item {
@@ -87,7 +88,6 @@ img {
     line-height: 2;
     letter-spacing: 0.04em;
     color: #2e2f42;
-    /* Убедитесь, что цвет достаточен для контрастности */
 }
 
 .xz {
@@ -96,7 +96,6 @@ img {
     line-height: 1.33333;
     letter-spacing: 0.04em;
     color: #2e2f42;
-    /* Убедитесь, что цвет достаточен для контрастности */
 }
 
 button[type='submit'] {
@@ -114,7 +113,6 @@ button[type='submit'] {
     letter-spacing: 0.04em;
     color: #fff;
     transition: background-color 0.3s ease;
-    /* Добавление перехода */
 }
 
 button[type='submit']:hover {
@@ -123,7 +121,6 @@ button[type='submit']:hover {
 
 @media (max-width: 600px) {
     .list {
-        flex-direction: column;
-        /* Изменение направления для мобильных устройств */
+        flex-direction: column; /* Изменение направления для мобильных устройств */
     }
 }
