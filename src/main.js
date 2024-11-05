@@ -16,7 +16,7 @@ searchForm.addEventListener("submit", handleForm);
 
 function handleForm(event) {
     event.preventDefault();
-    console.log("Працює чи нє");
+    console.log("It works or not");
 
     const inputValue = inputText.value.trim();
     console.log(inputValue);
@@ -24,8 +24,8 @@ function handleForm(event) {
     if (inputValue === "") {
         return iziToast.info({
             position: 'topRight',
-            title: 'Помилка',
-            message: 'Заповніть поле запиту',
+            title: 'Error',
+            message: 'Fill in the request field',
         });
     }
 
@@ -52,8 +52,8 @@ function handleForm(event) {
 
             iziToast.error({
                 position: 'topRight',
-                title: 'Помилка',
-                message: 'Сталася помилка при отриманні зображень. Спробуйте ще раз!',
+                title: 'Error',
+                message: 'An error occurred while retrieving images. Try again!',
                 backgroundColor: '#ef4040',
 
             });

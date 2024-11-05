@@ -31,8 +31,8 @@ export function fetchData(inputValue) {
 
             if (data.hits.length === 0) {
                 iziToast.error({
-                    title: 'Помилка',
-                    message: "Вибачте, не знайдено зображень за вашим запитом. Спробуйте ще раз!",
+                    title: 'Error',
+                    message: "Sorry, no images were found for your request. Try again!",
                     position: 'topCenter',
                     backgroundColor: '#ef4040',
                 });
@@ -44,8 +44,8 @@ export function fetchData(inputValue) {
             console.log(err);
 
             iziToast.error({
-                title: 'Помилка',
-                message: 'Сталася помилка при отриманні даних. Спробуйте ще раз.',
+                title: 'Error',
+                message: 'An error occurred while receiving data. Try again.',
                 position: 'topCenter',
                 backgroundColor: '#ef4040',
             });
