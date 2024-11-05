@@ -27,7 +27,6 @@ export function fetchData(inputValue) {
             return res.json();
         })
         .then(data => {
-            console.log(data);
 
             if (data.hits.length === 0) {
                 iziToast.error({

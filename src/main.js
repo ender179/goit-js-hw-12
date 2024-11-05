@@ -16,11 +16,9 @@ searchForm.addEventListener("submit", handleForm);
 
 function handleForm(event) {
     event.preventDefault();
-    console.log("It works or not");
 
     const inputValue = inputText.value.trim();
-    console.log(inputValue);
-
+   
     if (inputValue === "") {
         return iziToast.info({
             position: 'topRight',
