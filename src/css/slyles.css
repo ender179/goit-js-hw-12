@@ -17,7 +17,6 @@ body {
     /* Вендорные префиксы для mask */
     -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
     mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-
     /* Добавление вендорных префиксов для свойств mask */
     -webkit-mask-image: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
     mask-image: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
@@ -132,7 +131,6 @@ button[type='submit']:hover {
 
 @media (max-width: 600px) {
     .list {
-        flex-direction: column;
-        /* Изменение направления для мобильных устройств */
+        flex-direction: column; /* Изменение направления для мобильных устройств */
     }
 }
