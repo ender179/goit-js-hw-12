@@ -16,12 +16,9 @@ searchForm.addEventListener("submit", handleForm);
 
 function handleForm(event) {
     event.preventDefault();
-
-    const inputValue = inputText.value.trim();
    
     if (inputValue === "") {
         return iziToast.info({
-            position: 'topRight',
             title: 'Error',
             message: 'Fill in the request field',
         });

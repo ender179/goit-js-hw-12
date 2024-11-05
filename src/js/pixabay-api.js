@@ -28,7 +28,6 @@ export function fetchData(inputValue) {
         })
         .then(data => {
 
-            if (data.hits.length === 0) {
                 iziToast.error({
                     title: 'Error',
                     message: "Sorry, no images were found for your request. Try again!",
