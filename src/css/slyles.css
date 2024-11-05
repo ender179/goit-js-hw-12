@@ -7,7 +7,8 @@ body {
     top: 50%;
     left: 50%;
     width: 50px;
-    aspect-ratio: 1;
+    aspect-ratio: 1 / 1;
+    /* Явное указание соотношения сторон */
     border-radius: 50%;
     background:
         radial-gradient(farthest-side, #1687ff 94%, #0000) top/8px 8px no-repeat,
@@ -18,7 +19,7 @@ body {
 
 @keyframes l13 {
     100% {
-        transform: rotate(1turn)
+        transform: rotate(1turn);
     }
 }
 
@@ -28,7 +29,6 @@ body {
     justify-content: center;
     flex-direction: row;
     gap: 8px;
-
 }
 
 input[type='search'] {
@@ -38,6 +38,8 @@ input[type='search'] {
     border: 1px solid #808080;
     border-radius: 4px;
     padding-left: 10px;
+    transition: border-color 0.3s ease;
+    /* Добавление перехода */
 }
 
 input[type='search']:hover {
@@ -60,7 +62,6 @@ input[type='search']:focus {
     display: flex;
     flex-direction: column;
     border: 1px solid #808080;
-
 }
 
 .info {
@@ -86,6 +87,7 @@ img {
     line-height: 2;
     letter-spacing: 0.04em;
     color: #2e2f42;
+    /* Убедитесь, что цвет достаточен для контрастности */
 }
 
 .xz {
@@ -94,6 +96,7 @@ img {
     line-height: 1.33333;
     letter-spacing: 0.04em;
     color: #2e2f42;
+    /* Убедитесь, что цвет достаточен для контрастности */
 }
 
 button[type='submit'] {
@@ -110,8 +113,17 @@ button[type='submit'] {
     line-height: 1.5;
     letter-spacing: 0.04em;
     color: #fff;
+    transition: background-color 0.3s ease;
+    /* Добавление перехода */
 }
 
 button[type='submit']:hover {
     background: #6c8cff;
+}
+
+@media (max-width: 600px) {
+    .list {
+        flex-direction: column;
+        /* Изменение направления для мобильных устройств */
+    }
 }
