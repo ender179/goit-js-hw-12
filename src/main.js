@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let lightbox; // переменная для хранения экземпляра SimpleLightbox
 
     if (!searchForm || !inputText || !loader || !gallery) {
-        console.error("Не удалось найти один или несколько элементов в DOM.");
+        console.error("One or more items could not be found in DOM.");
         return;
     }
 
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
             .catch(error => {
-                console.error("Ошибка при загрузке данных:", error);
+                console.error("Error loading data:", error);
                 iziToast.error({
                     position: 'topRight',
                     title: 'Error',
