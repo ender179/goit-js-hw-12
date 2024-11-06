@@ -51,12 +51,12 @@ export function fetchData(inputValue) {
         })  
         .catch(err => {  
             console.error(err); // Логируем ошибку  
-
             iziToast.error({  
                 title: 'Ошибка',  
                 message: 'Произошла ошибка при получении данных. Попробуйте снова.',  
                 position: 'topCenter',  
                 backgroundColor: '#ef4040',  
             });  
+            return []; // Возвращаем пустой массив в случае ошибки  
         });  
 }

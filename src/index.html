@@ -4,24 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./css/slyles.css">
+  <link rel="stylesheet" href="./css/styles.css"> <!-- Исправлено название стиля -->
   <title>HomeWork-12</title>
 </head>
 
 <body>
   <div>
-    <form class="search-form">
-      <input type="search" placeholder="Search images..." autofocus />
+    <form class="search-form" id="search-form">
+      <input type="search" id="search-input" placeholder="Search images..." autofocus required />
       <button type="submit">Search</button>
     </form>
-    <div class="loader" style="display: none;"></div>
-
-
-    <ul class="list" style="padding-left: 0;"></ul>
+    <div class="loader" style="display: none;">Loading...</div>
+    <ul class="list" id="gallery" style="padding-left: 0;"></ul>
+    <button id="load-more" style="display: none;">Load more</button>
+    <div id="end-message" style="display: none;">We're sorry, but you've reached the end of search results.</div>
   </div>
 
   <script type="module" src="./main.js" defer></script>
-
 </body>
 
 </html>
