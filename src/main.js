@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let lightbox; // переменная для хранения экземпляра SimpleLightbox
 
     if (!searchForm || !inputText || !loader || !gallery) {
-        console.error("One or more items could not be found in DOM.");
         return;
     }
 
