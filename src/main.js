@@ -1,79 +1,118 @@
-import { fetchData } from "./js/pixabay-api";
-import { formResults } from "./js/render-functions";
+import iziToast from 'izitoast';
+import {
+  EVENT_TYPE,
+  MESSAGES,
+  MESSAGES_BG_COLORS,
+  showInfoMessage,
+} from './js/helpers';
+import { getGalleryData } from './js/pixabay-api';
+import { fetchGallery } from './js/render-functions';
 
-import iziToast from "izitoast";
-import "izitoast/dist/css/iziToast.min.css";
+let queryString = '';
+let currentPage = 1;
+let evtType = '';
 
-import SimpleLightbox from "simplelightbox";
-import "simplelightbox/dist/simple-lightbox.min.css";
+const IMAGE_MAX_COUNT = 15;
 
-document.addEventListener("DOMContentLoaded", () => {
-    const searchForm = document.querySelector(".search-form");
-    const inputText = document.querySelector(".search-form input");
-    const loader = document.querySelector(".loader");
-    const gallery = document.querySelector(".gallery"); // галерея для изображений
-    let lightbox; // переменная для хранения экземпляра SimpleLightbox
+const form = document.querySelector('.search-form');
+const gallery = document.querySelector('.gallery');
+const loadMoreBtn = document.querySelector('.load-more-btn');
 
-    if (!searchForm || !inputText || !loader || !gallery) {
-        return;
-    }
+form.addEventListener('submit', onSubmitForm);
 
-    searchForm.addEventListener("submit", handleForm);
-
-    function handleForm(event) {
-        event.preventDefault();
-        const inputValue = inputText.value.trim(); // получаем значение из поля ввода
-
-        if (inputValue === "") { // проверяем, что поле не пустое
-            iziToast.info({
-                title: 'Error',
-                message: 'Fill in the request field',
-            });
-            return;
-        }
-
-        showLoader(); // показываем загрузчик
-
-        fetchData(inputValue) // вызываем функцию для получения данных
-            .then(res => {
-                if (Array.isArray(res) && res.length > 0) { // проверка, что res - массив с данными
-                    formResults(res); // отображаем результаты
-                    if (lightbox) {
-                        lightbox.refresh(); // обновляем lightbox, если он уже существует
-                    } else {
-                        // инициализируем lightbox при первом вызове
-                        lightbox = new SimpleLightbox('.gallery-item a', {
-                            captionsData: 'alt', // подписи для изображений из атрибута alt
-                            captionDelay: 250, // задержка перед показом подписи
-                        });
-                    }
-                } else {
-                    iziToast.warning({
-                        title: 'No Results',
-                        message: 'No images found. Try a different search.',
-                    });
-                }
-            })
-            .catch(error => {
-                console.error("Error loading data:", error);
-                iziToast.error({
-                    position: 'topRight',
-                    title: 'Error',
-                    message: 'An error occurred while retrieving images. Try again!',
-                    backgroundColor: '#ef4040',
-                });
-            })
-            .finally(() => {
-                hideLoader(); // скрываем загрузчик
-                searchForm.reset(); // сбрасываем форму
-            });
-    }
-
-    function showLoader() {
-        loader.style.display = "block"; // показываем загрузчик
-    }
-
-    function hideLoader() {
-        loader.style.display = "none"; // скрываем загрузчик
-    }
+loadMoreBtn.addEventListener('click', async () => {
+  try {
+    evtType = EVENT_TYPE.click;
+    await renderGallery(queryString, currentPage);
+    const liEl = document.querySelector('li');
+    const { height } = liEl.getBoundingClientRect();
+    scrollVertical(height * 2, 0);
+  } catch (error) {
+    showInfoMessage(MESSAGES.exception + error, MESSAGES_BG_COLORS.orange);
+  }
 });
+
+async function onSubmitForm(event) {
+  try {
+    event.preventDefault();
+
+    const target = event.target;
+    const search = target.elements.search.value.trim();
+
+    evtType = EVENT_TYPE.submit;
+
+    loadMoreBtn.classList.remove('visible');
+
+    iziToast.destroy();
+
+    if (queryString !== search || evtType === EVENT_TYPE.submit) {
+      gallery.innerHTML = '';
+      queryString = target.elements.search.value.trim();
+      currentPage = 1;
+    }
+
+    if (!search) {
+      showInfoMessage(MESSAGES.info, MESSAGES_BG_COLORS.blue);
+      gallery.innerHTML = '';
+      return;
+    }
+
+    await renderGallery(queryString, currentPage);
+
+    target.reset();
+  } catch (error) {
+    showInfoMessage(MESSAGES.exception + error, MESSAGES_BG_COLORS.orange);
+  }
+}
+
+async function renderGallery(searchValue, page) {
+  try {
+    if (searchValue === queryString && evtType === EVENT_TYPE.click) {
+      currentPage += 1;
+      page += 1;
+    }
+
+    const galleryData = await getGalleryData(searchValue, page);
+
+    removeLoader();
+
+    if (validateGalleryData(galleryData)) {
+      const restOfImages = Math.round(galleryData.totalHits / page);
+      fetchGallery(galleryData);
+      showHideBtn(restOfImages);
+    }
+  } catch (error) {
+    showInfoMessage(MESSAGES.exception + error, MESSAGES_BG_COLORS.orange);
+  }
+}
+
+function scrollVertical(x = 0, y = 0) {
+  window.scrollBy({ top: x, left: y, behavior: 'smooth' });
+}
+
+function removeLoader() {
+  const loaderWrapper = document.querySelector('.loader-wrapper');
+  loaderWrapper.remove();
+}
+
+function validateGalleryData(galleryData) {
+  if (!galleryData) {
+    gallery.innerHTML = '';
+    return false;
+  } else if (galleryData && galleryData.totalHits === 0) {
+    showInfoMessage(MESSAGES.warning, MESSAGES_BG_COLORS.red);
+    gallery.innerHTML = '';
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function showHideBtn(imagesCount) {
+  if (imagesCount <= IMAGE_MAX_COUNT) {
+    loadMoreBtn.classList.remove('visible');
+    showInfoMessage(MESSAGES.endOfSearch, MESSAGES_BG_COLORS.blue);
+    return;
+  }
+  loadMoreBtn.classList.add('visible');
+}
