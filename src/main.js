@@ -1,10 +1,4 @@
 import iziToast from 'izitoast';  
-import {  
-  EVENT_TYPE,  
-  MESSAGES,  
-  MESSAGES_BG_COLORS,  
-  showInfoMessage,  
-} from './js/helpers';  
 import { getGalleryData } from './js/pixabay-api';  
 import { fetchGallery } from './js/render-functions';  
 
@@ -24,7 +18,7 @@ form.addEventListener('submit', onSubmitForm);
 // Додати обробник події для кнопки "Load More"  
 loadMoreBtn.addEventListener('click', async () => {  
   try {  
-    evtType = EVENT_TYPE.click;  
+    evtType = 'click';  
     await renderGallery(queryString, currentPage);  
 
     const liEl = document.querySelector('li');  
@@ -33,7 +27,7 @@ loadMoreBtn.addEventListener('click', async () => {
       scrollVertical(height * 2, 0);  
     }  
   } catch (error) {  
-    showInfoMessage(MESSAGES.exception + error, MESSAGES_BG_COLORS.orange);  
+    showInfoMessage('Виникла помилка: ' + error, 'orange');  
   }  
 });  
 
@@ -44,14 +38,14 @@ async function onSubmitForm(event) {
     const target = event.target;  
     const search = target.elements.search.value.trim();  
 
-    evtType = EVENT_TYPE.submit;  
+    evtType = 'submit';  
 
     loadMoreBtn.classList.remove('visible');  
 
     iziToast.destroy();  
 
     // Перевірка на новий запит  
-    if (queryString !== search || evtType === EVENT_TYPE.submit) {  
+    if (queryString !== search || evtType === 'submit') {  
       gallery.innerHTML = '';  
       queryString = search;  
       currentPage = 1;  
@@ -59,7 +53,7 @@ async function onSubmitForm(event) {
 
     // Якщо поле пошуку пусте  
     if (!search) {  
-      showInfoMessage(MESSAGES.info, MESSAGES_BG_COLORS.blue);  
+      showInfoMessage('Будь ласка, введіть пошуковий запит.', 'blue');  
       gallery.innerHTML = '';  
       return;  
     }  
@@ -67,14 +61,14 @@ async function onSubmitForm(event) {
     await renderGallery(queryString, currentPage);  
     target.reset();  
   } catch (error) {  
-    showInfoMessage(MESSAGES.exception + error, MESSAGES_BG_COLORS.orange);  
+    showInfoMessage('Виникла помилка: ' + error, 'orange');  
   }  
 }  
 
 async function renderGallery(searchValue, page) {  
   try {  
     // Збільшення сторінки для "Load More"  
-    if (searchValue === queryString && evtType === EVENT_TYPE.click) {  
+    if (searchValue === queryString && evtType === 'click') {  
       currentPage += 1;  
       page += 1;  
     }  
@@ -90,7 +84,7 @@ async function renderGallery(searchValue, page) {
       showHideBtn(restOfImages);  
     }  
   } catch (error) {  
-    showInfoMessage(MESSAGES.exception + error, MESSAGES_BG_COLORS.orange);  
+    showInfoMessage('Виникла помилка: ' + error, 'orange');  
   }  
 }  
 
@@ -110,7 +104,7 @@ function validateGalleryData(galleryData) {
     gallery.innerHTML = '';  
     return false;  
   } else if (galleryData && galleryData.totalHits === 0) {  
-    showInfoMessage(MESSAGES.warning, MESSAGES_BG_COLORS.red);  
+    showInfoMessage('Нічого не знайдено.', 'red');  
     gallery.innerHTML = '';  
     return false;  
   }  
@@ -120,8 +114,16 @@ function validateGalleryData(galleryData) {
 function showHideBtn(imagesCount) {  
   if (imagesCount <= IMAGE_MAX_COUNT) {  
     loadMoreBtn.classList.remove('visible');  
-    showInfoMessage(MESSAGES.endOfSearch, MESSAGES_BG_COLORS.blue);  
+    showInfoMessage('Це кінець пошуку.', 'blue');  
   } else {  
     loadMoreBtn.classList.add('visible');  
   }  
+}  
+
+// Функція для показу повідомлень  
+function showInfoMessage(message, bgColor) {  
+  iziToast.show({  
+    message: message,  
+    backgroundColor: bgColor,  
+  });  
 }
