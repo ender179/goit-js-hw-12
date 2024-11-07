@@ -1,30 +1,34 @@
-const list = document.querySelector(".list");
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
-export function formResults(images) {
-    // Очистка предыдущих результатов
-    list.innerHTML = "";
+let lightbox;
 
-    // Проверка на наличие изображений
-    if (!images || images.length === 0) {
-        list.innerHTML = "<p>No images found.</p>"; // Сообщение об отсутствии изображений
-        return;
-    }
-
-    // Генерация HTML разметки для каждого изображения
-    const markup = images.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) => `
-        <div class="gallery-item">
-            <a href="${largeImageURL}" class="gallery-link"> <!-- убрали target="_blank" -->
-                <img src="${webformatURL}" alt="${tags || 'Image'}" width="360" height="200" loading="lazy"/>
-            </a>
-            <div class="info">
-                <p class="info-text"><b class="xz">Likes:</b> ${likes}</p>
-                <p class="info-text"><b class="xz">Views:</b> ${views}</p>
-                <p class="info-text"><b class="xz">Comments:</b> ${comments}</p>
-                <p class="info-text"><b class="xz">Downloads:</b> ${downloads}</p>
+export function renderImages(images) {
+  const gallery = document.querySelector('.gallery');
+  const markup = images
+    .map(
+      ({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) =>
+        `<li>
+          <a href="${largeImageURL}">
+            <div class="image-info">
+              <img src="${webformatURL}" alt="${tags}" width="300" height="200">
+              <p><strong>Likes:</strong> ${likes}</p>
+              <p><strong>Views:</strong> ${views}</p>
+              <p><strong>Comments:</strong> ${comments}</p>
+              <p><strong>Downloads:</strong> ${downloads}</p>
             </div>
-        </div>
-    `).join("");
+          </a>
+        </li>`
+    )
+    .join('');
 
-    // Вставка новых изображений
-    list.insertAdjacentHTML("beforeend", markup);
+  gallery.insertAdjacentHTML('beforeend', markup);
+
+  if (!lightbox) {
+    lightbox = new SimpleLightbox('.gallery a');
+  } else {
+    lightbox.refresh();
+  }
 }
+
+

@@ -1,136 +1,90 @@
+
+@import url('./container.css');
+@import url('./form.css');
+
+
+
 body {
-    font-family: "Montserrat", sans-serif;
+  background-color: aqua;
 }
 
-.loader {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 50px;
-    height: 50px;
-    /* Явное указание высоты для совместимости */
-    border-radius: 50%;
-    background:
-        radial-gradient(farthest-side, #1687ff 94%, #0000) top/8px 8px no-repeat,
-        conic-gradient(#0000 30%, #1696ff);
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+  }
 
-    /* Вендорные префиксы для mask */
-    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-    mask: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-    /* Добавление вендорных префиксов для свойств mask */
-    -webkit-mask-image: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-    mask-image: radial-gradient(farthest-side, #0000 calc(100% - 8px), #000 0);
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-
-    animation: l13 1s infinite linear;
+  ul {
+    list-style: none;
 }
 
-@keyframes l13 {
-    100% {
-        transform: rotate(1turn);
-    }
-}
-
-.search-form {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    gap: 8px;
-}
-
-input[type='search'] {
-    width: 272px;
-    height: 40px;
-    outline: none;
-    border: 1px solid #808080;
-    border-radius: 4px;
-    padding-left: 10px;
-    transition: border-color 0.3s ease;
-}
-
-input[type='search']:hover {
-    border: 1px solid #000;
-}
-
-input[type='search']:focus {
-    border: 1px solid #4e75ff;
-}
-
-.list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 24px;
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding-top: 70px;
+  
 }
 
 .gallery-item {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #808080;
+  overflow: hidden;
 }
 
-.info {
-    display: flex;
-    align-items: center;
-    gap: 25px;
-    width: 340px;
-    height: 48px;
-    background: #fff;
-    padding-left: 20px;
+.gallery-link {
+  display: block;
 }
 
-img {
-    object-fit: cover;
+.gallery-image {
+  display: block;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
 
-.info-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 2;
-    letter-spacing: 0.04em;
-    color: #2e2f42;
+.loader {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  width: 50px;
+  --b: 8px; 
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(#0000 10%,#f03355) content-box;
+  -webkit-mask:
+    repeating-conic-gradient(#0000 0deg,#000 1deg 20deg,#0000 21deg 36deg),
+    radial-gradient(farthest-side,#0000 calc(100% - var(--b) - 1px),#000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+    mask-composite: intersect;
+  animation:l4 1s infinite steps(10);
+@keyframes l4 {to{transform: rotate(1turn)}}
 }
 
-.xz {
-    font-weight: 900;
-    font-size: 12px;
-    line-height: 1.33333;
-    letter-spacing: 0.04em;
-    color: #2e2f42;
+.gallery li {
+  position: relative;
+  list-style-type: none;
+  margin: 10px;
 }
 
-button[type='submit'] {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    width: 91px;
-    height: 40px;
-    background: #4e75ff;
-    border: none;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.5;
-    letter-spacing: 0.04em;
-    color: #fff;
-    transition: background-color 0.3s ease;
+.image-info {
+  background-color: rgba(0, 0, 0, 0.6); /* Темний фон з прозорістю */
+  color: #fff;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: left;
 }
 
-button[type='submit']:hover {
-    background: #6c8cff;
+.image-info p {
+  margin: 4px 0;
 }
 
-@media (max-width: 600px) {
-    .list {
-        flex-direction: column; /* Изменение направления для мобильных устройств */
-    }
-}
