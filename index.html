@@ -2,26 +2,33 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Исправлено название стиля -->
-  <title>HomeWork-12</title>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>goit-js-hw-12</title>
   <script type="module" crossorigin src="/goit-js-hw-12/index.js"></script>
-  <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-5ObWk2rO.js">
-  <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-DumFYO8Z.css">
-  <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-C1G-QMzc.css">
+  <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-C4-ZuMk8.js">
+  <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-CWKLx11g.css">
+  <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/index-CuzrTiRv.css">
 </head>
 
 <body>
-  <div>
+
+
+  <main>
     <form class="search-form" id="search-form">
-      <input type="search" id="search-input" placeholder="Search images..." autofocus required />
-      <button type="submit">Search</button>
+      <input class="text-input" type="text" name="searchQuery" autocomplete="off" placeholder="Пошук зображення..." />
+      <button class="btn-submit" tyoe="submit">Пошук</button>
     </form>
-    <div class="loader" style="display: none;">Loading...</div>
-    <ul class="list" id="gallery" style="padding-left: 0;"></ul>
-    <button id="load-more" style="display: none;">Load more</button>
-    <div id="end-message" style="display: none;">We're sorry, but you've reached the end of search results.</div>
-  </div>
+    <div class="loader" style="display:none">Loading...</div>
+    <ul class="gallery"></ul>
+    <button class="btn-load" type="submit">Завантажити більше</button>
+
+
+
+  </main>
+
+
 
 </body>
 
